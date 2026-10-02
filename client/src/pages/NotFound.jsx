@@ -1,13 +1,16 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Icon from '../components/Icon.jsx';
 
 export default function NotFound() {
+  const navigate = useNavigate();
   return (
-    <section className="page-hero not-found">
-      <div className="container">
-        <h1>404</h1>
-        <p className="lead">The page you’re looking for doesn’t exist.</p>
-        <Link to="/" className="btn btn-primary">Back home</Link>
+    <main className="inner-page">
+      <div className="empty-cart">
+        <span><Icon name="search" size={38} /></span>
+        <h2>This page wandered off</h2>
+        <p>Let’s get you back to something delicious.</p>
+        <button className="primary" onClick={() => navigate('/')}>Back to home <Icon name="arrow" /></button>
       </div>
-    </section>
+    </main>
   );
 }

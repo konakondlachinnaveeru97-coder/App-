@@ -2,15 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App.jsx';
-import { ContentProvider } from './ContentContext.jsx';
+import { ShopProvider } from './ShopContext.jsx';
 import './styles/index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-      <ContentProvider>
+      <ShopProvider>
         <App />
-      </ContentProvider>
+      </ShopProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

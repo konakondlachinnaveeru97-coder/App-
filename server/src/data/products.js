@@ -1,0 +1,58 @@
+// Menu from the Figma design. Used to seed MongoDB and as a read-only
+// fallback when the database is unreachable.
+const products = [
+  {
+    slug: 'parisian-butter-croissant',
+    name: 'Parisian Butter Croissant',
+    region: 'France',
+    price: 189,
+    rating: 4.9,
+    badge: 'Bestseller',
+    eggless: false,
+    allergens: ['gluten', 'dairy', 'egg'],
+    description: 'Crisp, airy, and baked fresh throughout the day.',
+    image: 'https://images.unsplash.com/photo-1763207291761-e27bb059d851?auto=format&fit=crop&w=800&q=85',
+    sortOrder: 1,
+  },
+  {
+    slug: 'pistachio-baklava',
+    name: 'Pistachio Baklava',
+    region: 'Türkiye',
+    price: 249,
+    rating: 4.8,
+    badge: 'Chef’s pick',
+    eggless: true,
+    allergens: ['gluten', 'nuts', 'dairy'],
+    description: 'Crisp layers of filo, honey syrup, and roasted pistachios.',
+    image: 'https://images.unsplash.com/photo-1638315207735-d60e0a8f159f?auto=format&fit=crop&w=800&q=85',
+    sortOrder: 2,
+  },
+  {
+    slug: 'nordic-cinnamon-swirl',
+    name: 'Nordic Cinnamon Swirl',
+    region: 'Sweden',
+    price: 219,
+    rating: 4.9,
+    badge: null,
+    eggless: true,
+    allergens: ['gluten', 'dairy'],
+    description: 'Soft cardamom dough rolled with cinnamon butter.',
+    image: 'https://images.unsplash.com/photo-1593003942568-0e21adb1ea1f?auto=format&fit=crop&w=800&q=85',
+    sortOrder: 3,
+  },
+  {
+    slug: 'classic-tiramisu',
+    name: 'Classic Tiramisu',
+    region: 'Italy',
+    price: 289,
+    rating: 4.7,
+    badge: null,
+    eggless: false,
+    allergens: ['gluten', 'dairy', 'egg'],
+    description: 'Espresso-soaked savoiardi layered with mascarpone cream.',
+    image: 'https://images.unsplash.com/photo-1644845795138-49026e068b98?auto=format&fit=crop&w=800&q=85',
+    sortOrder: 4,
+  },
+];
+
+export default products;

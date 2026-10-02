@@ -1,41 +1,53 @@
-# MERN Website
+# Sandhya World Bakery
 
-A full-stack website built with **MongoDB, Express, React (Vite), and Node.js**.
+A MERN stack (MongoDB, Express, React, Node.js) implementation of the Figma Make design
+[Bakery website with AI assistant](https://www.figma.com/make/yfNxhml2OwiTUFy6OJ7Lv0/Bakery-website-with-AI-assistant).
 
-> **Design status:** the Figma design at https://pseudo-cheer-68072933.figma.site could not be
-> fetched from the build environment (network policy blocked `*.figma.site` and `figma.com`).
-> The layout, copy, and colors here are placeholders. To match the design, update:
-> - **Copy:** `server/src/data/siteContent.js` (or the `site` document in MongoDB)
-> - **Colors, fonts, spacing:** the design tokens at the top of `client/src/styles/index.css`
-> - **Sections:** `client/src/sections/*`
+## Features
+
+- **Home:** hero, "Our global favourites" menu loaded from MongoDB, and the "Why Sandhya?" story.
+- **Cart:** add, change quantity, and remove items. The cart is saved in the browser. Totals include 5% tax and free delivery.
+- **Checkout:** creates an order in MongoDB. Prices are always recalculated on the server.
+- **Order tracking:** look up an order by ID (e.g. `SB240618`). Progress moves through
+  confirmed, in the oven, packed, and out for delivery based on time since the order was placed, and refreshes every 30 seconds.
+- **Sia, the AI assistant:** answers questions about bestsellers, eggless options, allergens, prices,
+  and delivery, can add suggested items to the cart, and can look up an order by its ID.
+  Replies are rule-based and built from live menu and order data, so no external AI service is needed.
 
 ## Structure
 
 ```
-├── client/                 React + Vite frontend
+├── client/                  React + Vite frontend
 │   └── src/
-│       ├── components/     Navbar, Footer, forms, icons
-│       ├── sections/       Hero, Stats, Services, Process, About, Testimonials, CTA
-│       ├── pages/          Home, Services, About, Contact, 404
-│       └── styles/         Global CSS + design tokens
-└── server/                 Express + Mongoose API
+│       ├── components/      Header, Footer, Logo, Icon, Assistant (Sia)
+│       ├── pages/           Home, Cart, Tracking, NotFound
+│       ├── ShopContext.jsx  Menu + cart state
+│       └── styles/          Design styles and tokens
+└── server/                  Express + Mongoose API
     ├── src/
-    │   ├── models/         Message, Subscriber, Content
-    │   ├── routes/         /api/content, /api/contact, /api/subscribe
-    │   └── data/           Default site content
-    └── test/               API tests (node:test + supertest)
+    │   ├── models/          Product, Order
+    │   ├── routes/          products, orders, assistant
+    │   ├── services/        catalog, orders, tracking, assistant logic
+    │   └── data/            Menu used to seed MongoDB
+    ├── demo.js              Runs the app with an in-memory store (no MongoDB)
+    └── test/                API and tracking tests (node:test + supertest)
 ```
 
 ## Getting started
 
-Requires Node.js 18+ and a MongoDB instance (local or MongoDB Atlas).
+Requires Node.js 18+ and MongoDB (local or MongoDB Atlas).
 
 ```bash
 npm run install:all
 cp server/.env.example server/.env   # set MONGODB_URI
-npm run seed                          # optional: store site content in MongoDB
 npm run dev                           # API on :5000, web on :5173
 ```
+
+The menu is seeded into MongoDB automatically on first start. You can also run `npm run seed`.
+Seeding only inserts missing items, so prices edited in the database are kept.
+
+No MongoDB yet? `npm run demo` builds the client and serves the whole site on
+http://localhost:5000 with an in-memory store. Orders disappear when it stops.
 
 ## Production
 
@@ -46,15 +58,15 @@ npm start          # Express serves the API and the built React app on $PORT
 
 ## API
 
-| Method | Path             | Description                                                  |
-| ------ | ---------------- | ------------------------------------------------------------ |
-| GET    | `/api/health`    | Server and database status                                   |
-| GET    | `/api/content`   | Site copy from MongoDB, or bundled defaults                  |
-| POST   | `/api/contact`   | Save a contact message `{ name, email, subject?, message }`  |
-| POST   | `/api/subscribe` | Add a newsletter subscriber `{ email }`                      |
+| Method | Path                    | Description                                              |
+| ------ | ----------------------- | -------------------------------------------------------- |
+| GET    | `/api/health`           | Server and database status                               |
+| GET    | `/api/products`         | Menu (falls back to the bundled menu if MongoDB is down) |
+| POST   | `/api/orders`           | Place an order: `{ items: [{ productId, quantity }] }`   |
+| GET    | `/api/orders/:orderId`  | Order details and live tracking status                   |
+| POST   | `/api/assistant`        | Ask Sia: `{ message }` returns `{ reply, suggestion, action }` |
 
-If MongoDB is unreachable, the site still renders with the default content and the form
-endpoints respond with `503`.
+If MongoDB is unreachable, the menu still renders and ordering endpoints respond with `503`.
 
 ## Tests
 

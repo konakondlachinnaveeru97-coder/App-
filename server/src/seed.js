@@ -1,10 +1,9 @@
 import 'dotenv/config';
 import mongoose from 'mongoose';
 import { connectDB } from './db.js';
-import Content from './models/Content.js';
-import siteContent from './data/siteContent.js';
+import { seedProducts } from './services/catalog.js';
 
 await connectDB(process.env.MONGODB_URI);
-await Content.updateOne({ key: 'site' }, { key: 'site', data: siteContent }, { upsert: true });
-console.log('Seeded site content.');
+const added = await seedProducts();
+console.log(`Seed complete: ${added} new menu item(s) added.`);
 await mongoose.disconnect();

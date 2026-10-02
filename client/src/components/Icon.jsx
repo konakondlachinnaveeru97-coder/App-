@@ -1,35 +1,26 @@
+// Icon set from the Figma design.
 const paths = {
-  pen: 'M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z',
-  code: 'm16 18 6-6-6-6M8 6l-6 6 6 6',
-  phone: 'M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm4 16h2',
-  chart: 'M3 3v18h18M7 15l4-4 3 3 6-6',
-  cloud: 'M17.5 19a4.5 4.5 0 1 0-1.4-8.8A6 6 0 0 0 4 12a4 4 0 0 0 1 7.9Z',
-  support: 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Zm0-6a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7.1 2.9 4.3-4.3m5.6-5.6 4.3-4.3m0 14.2-4.3-4.3M9.2 9.2 4.9 4.9',
-  check: 'M20 6 9 17l-5-5',
-  mail: 'M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm18 2-10 7L2 6',
-  call: 'M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z',
-  pin: 'M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Zm-8 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z',
-  menu: 'M4 6h16M4 12h16M4 18h16',
-  close: 'M18 6 6 18M6 6l12 12',
-  arrow: 'M5 12h14m-6-6 6 6-6 6',
-  quote: 'M7 7h4v4c0 3-2 5-4 6m8-10h4v4c0 3-2 5-4 6',
+  arrow: <><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></>,
+  bag: <><path d="M6 8h12l1 12H5L6 8Z" /><path d="M9 9V6a3 3 0 0 1 6 0v3" /></>,
+  chat: <><path d="M21 15a4 4 0 0 1-4 4H8l-5 3 1.5-5A8 8 0 1 1 21 15Z" /><path d="M8 12h.01M12 12h.01M16 12h.01" /></>,
+  check: <path d="m5 12 4 4L19 6" />,
+  chevron: <path d="m9 18 6-6-6-6" />,
+  clock: <><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></>,
+  minus: <path d="M5 12h14" />,
+  plus: <path d="M12 5v14M5 12h14" />,
+  search: <><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></>,
+  send: <><path d="m22 2-7 20-4-9-9-4Z" /><path d="M22 2 11 13" /></>,
+  sparkle: <><path d="m12 3 1.2 3.8L17 8l-3.8 1.2L12 13l-1.2-3.8L7 8l3.8-1.2L12 3Z" /><path d="m5 14 .8 2.2L8 17l-2.2.8L5 20l-.8-2.2L2 17l2.2-.8L5 14Z" /></>,
+  star: <path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z" />,
+  trash: <><path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13" /><path d="M10 11v5M14 11v5" /></>,
+  x: <path d="m6 6 12 12M18 6 6 18" />,
 };
 
-export default function Icon({ name, size = 24, className = '' }) {
+export default function Icon({ name, size = 20 }) {
   return (
-    <svg
-      className={className}
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d={paths[name] || paths.check} />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"
+      strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {paths[name]}
     </svg>
   );
 }

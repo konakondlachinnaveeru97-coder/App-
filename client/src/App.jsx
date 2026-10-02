@@ -1,55 +1,35 @@
 import { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import { useContent } from './ContentContext.jsx';
-import Navbar from './components/Navbar.jsx';
+import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
+import Assistant from './components/Assistant.jsx';
 import Home from './pages/Home.jsx';
-import ServicesPage from './pages/ServicesPage.jsx';
-import AboutPage from './pages/AboutPage.jsx';
-import ContactPage from './pages/ContactPage.jsx';
+import Cart from './pages/Cart.jsx';
+import Tracking from './pages/Tracking.jsx';
 import NotFound from './pages/NotFound.jsx';
 
 function ScrollToTop() {
-  const { pathname } = useLocation();
-  useEffect(() => window.scrollTo(0, 0), [pathname]);
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (!hash) window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [pathname, hash]);
   return null;
 }
 
 export default function App() {
-  const { content, error, loading, reload } = useContent();
-
-  if (loading && !content) {
-    return (
-      <div className="status-screen" role="status">
-        <span className="spinner" aria-hidden="true" />
-        Loading…
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="status-screen">
-        <p>We couldn’t load the site right now.</p>
-        <button className="btn btn-primary" onClick={reload}>Try again</button>
-      </div>
-    );
-  }
-
   return (
-    <>
+    <div className="app-shell">
       <ScrollToTop />
-      <Navbar />
-      <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </main>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/track" element={<Tracking />} />
+        <Route path="/track/:orderId" element={<Tracking />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <Assistant />
       <Footer />
-    </>
+    </div>
   );
 }

@@ -3,9 +3,9 @@ import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import express from 'express';
 import cors from 'cors';
-import contactRoutes from './routes/contact.js';
-import subscribeRoutes from './routes/subscribe.js';
-import contentRoutes from './routes/content.js';
+import productRoutes from './routes/products.js';
+import orderRoutes from './routes/orders.js';
+import assistantRoutes from './routes/assistant.js';
 import { notFound, errorHandler } from './middleware/errorHandler.js';
 import { isDBConnected } from './db.js';
 
@@ -25,9 +25,9 @@ export function createApp({ dbReady = isDBConnected, clientOrigin, clientDist } 
   app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', database: dbReady() ? 'connected' : 'disconnected' });
   });
-  app.use('/api/content', contentRoutes);
-  app.use('/api/contact', contactRoutes);
-  app.use('/api/subscribe', subscribeRoutes);
+  app.use('/api/products', productRoutes);
+  app.use('/api/orders', orderRoutes);
+  app.use('/api/assistant', assistantRoutes);
   app.use('/api', notFound);
 
   // In production the Express server also serves the built React app.
